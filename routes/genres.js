@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 // const genres = require("../data/genres");
@@ -27,7 +26,9 @@ router.get("/:id", async (req, res) => {
 //*ADD a genre
 router.post("/", async (req, res) => {
   if (!req.body.name || !req.body.description) {
-    res.status(400).send("'name' and 'description' field is required");
+    res
+      .status(400)
+      .send("'name', 'description' and 'description' field is required");
     return;
   }
   // const genre = {
@@ -37,7 +38,7 @@ router.post("/", async (req, res) => {
   // };
 
   let genre = new Genre({
-    id: genres.length + 1,
+    id: req.body.id,
     name: req.body.name,
     description: req.body.description,
   });
@@ -47,24 +48,24 @@ router.post("/", async (req, res) => {
   res.send(genre);
 });
 
-//*UPDATE a genre
-router.put("/:id", (req, res) => {
-  if (!req.body.name || !req.body.description) {
-    res.status(400).send("Both 'name' and 'description' are required");
-    return;
-  }
-  const index = genres.findIndex((genre) => genre.id === +req.params.id);
-  if (index === -1) {
-    res.status(404).send("Genre with given ID not found!");
-    return;
-  }
-  genres[index] = {
-    ...genres[index],
-    name: req.body.name,
-    description: req.body.description,
-  };
-  res.send(genres[index]);
-});
+// //*UPDATE a genre works with Arrays
+// router.put("/:id", (req, res) => {
+//   if (!req.body.name || !req.body.description) {
+//     res.status(400).send("Both 'name' and 'description' are required");
+//     return;
+//   }
+//   const index = genres.findIndex((genre) => genre.id === +req.params.id);
+//   if (index === -1) {
+//     res.status(404).send("Genre with given ID not found!");
+//     return;
+//   }
+//   genres[index] = {
+//     ...genres[index],
+//     name: req.body.name,
+//     description: req.body.description,
+//   };
+//   res.send(genres[index]);
+// });
 
 //*Update name of Genre
 router.put("/:id", async (req, res) => {
@@ -78,6 +79,7 @@ router.put("/:id", async (req, res) => {
     { name: req.body.name },
     { new: true }
   );
+  return genre;
 });
 
 //*DELETE a genre
