@@ -1,8 +1,9 @@
 const express = require("express");
+const Joi = require("joi");
 const router = express.Router();
 // const genres = require("../data/genres");
-const validateGenre = require("../models/Genres").validateGenre;
-const Genre = require("../models/Genres").Genre;
+const validateGenre = require("../models/genres").validateGenre;
+const Genre = require("../models/genres").Genre;
 
 //* GET all genres
 router.get("/", async (req, res) => {
@@ -12,15 +13,20 @@ router.get("/", async (req, res) => {
 
 //*GET specific genre
 router.get("/:id", async (req, res) => {
-  //* simply find by id ad return it if it exist
-  const genre = await Genre.findById(req.params.id);
-
+  //* simply find by id and return it if it exist
+  //NOTE: here, id refers to ObjectId: _id
+  const genre = await Genre.findById(+req.params.id);
+  res.send(genre);
+  console.log(genre);
   // const genre = genres.find((genre) => genre.id === +req.params.id); //*Its for working with array
   if (!genre) {
     res.status(404).send("Genre with provided key not found");
     return;
   }
   res.send(genre);
+  // const genree = await Genre.findOne({ id: +req.params.id });
+  // const genree2 = await Genre.findById("658d79823069d6f0cb9c1843");
+  // res.send([genree, genree2]);
 });
 
 //*ADD a genre
@@ -70,7 +76,12 @@ router.post("/", async (req, res) => {
 //*Update name of Genre
 router.put("/:id", async (req, res) => {
   //* validate Genre request
+  // const schema = Joi.object({
+  //   name: Joi.string().trim().min(1).required(),
+  // });
+  // const { error, value } = schema.validate(req.body);
   const { error } = validateGenre(req.body);
+  // console.log(error);
   if (error) return res.status(400).send(error.details[0].message);
 
   //* Find by id and try to update it
@@ -79,7 +90,7 @@ router.put("/:id", async (req, res) => {
     { name: req.body.name },
     { new: true }
   );
-  return genre;
+  res.send(genre);
 });
 
 //*DELETE a genre
