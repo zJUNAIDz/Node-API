@@ -70,4 +70,14 @@ router.put("/:id", async (req, res) => {
   res.send(customer);
 });
 
+router.delete("/:id", async (req, res) => {
+  const customer = await Customer.findByIdAndDelete(req.params.id);
+  if (!customer) {
+    res.status(404).send("Customer with given Id doesn't exist");
+    return;
+  }
+
+  res.send(customer);
+});
+
 module.exports = router;
