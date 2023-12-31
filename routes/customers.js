@@ -31,5 +31,16 @@ router.get("/:id", async (req, res) => {
   res.send(customer);
 });
 
+router.post("/", async (req, res) => {
+  const data = req.body;
+  const { error } = validate(data);
+  if (error) {
+    res.status(500).send(error.details[0].message);
+    return;
+  }
+  const customer = new Customer(data);
+  customer.save(); //* no await needed as we're not storing and using it somewhere 
+  res.send(customer);
+});
 
 module.exports = router;
