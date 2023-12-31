@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
-const schema = mongoose.schema({
+const schema = new mongoose.Schema({
   isGold: Boolean,
   name: String,
   phone: String,
