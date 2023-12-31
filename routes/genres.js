@@ -1,5 +1,4 @@
 const express = require("express");
-const Joi = require("joi");
 const router = express.Router();
 // const genres = require("../data/genres");
 const validateGenre = require("../models/genres").validateGenre;
@@ -90,6 +89,10 @@ router.put("/:id", async (req, res) => {
     { name: req.body.name },
     { new: true }
   );
+  if (!genre) {
+    res.send("Genre with given Id doesn't Exist");
+    return;
+  }
   res.send(genre);
 });
 
