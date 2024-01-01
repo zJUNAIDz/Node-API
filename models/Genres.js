@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
 
 const Genre = mongoose.model("Genre", schema);
 
-function validateGenre(genre) {
+function validate(genre) {
   const schema = Joi.object({
     name: Joi.string().min(1).required(),
   });
@@ -17,5 +17,5 @@ function validateGenre(genre) {
 }
 
 module.exports.Genre = Genre;
-module.exports.validateGenre = validateGenre;
+module.exports.validate = validate;
 // export default mongoose.model("Genre", schema);

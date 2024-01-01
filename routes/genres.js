@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 // const genres = require("../data/genres");
-const validateGenre = require("../models/genres").validateGenre;
-const Genre = require("../models/genres").Genre;
+const { Genre, validate } = require("../models/genres");
 
 //* GET all genres
 router.get("/", async (req, res) => {

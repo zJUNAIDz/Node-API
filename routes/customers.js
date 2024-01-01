@@ -1,8 +1,7 @@
 //* GET POST PUT DELETE
 //* initial setup
 const express = require("express");
-const Customer = require("../models/customer").Customer;
-const validate = require("../models/customer").validateCustomer;
+const { Customer, validate } = require("../models/customer");
 
 const router = express.Router();
 
@@ -72,7 +71,10 @@ router.put("/:id", async (req, res) => {
     res.status(404).send("Customer with given Id doesn't exist");
   }
 });
-
+/**
+ * @param ObjectId
+ * @returns JSON object of deleted customer
+ */
 router.delete("/:id", async (req, res) => {
   try {
     const customer = await Customer.findByIdAndDelete(req.params.id);
