@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 
   //* Intigrity-friendly 
   try {
-    const result = new Fawn.Task()
+    new Fawn.Task()
       .save('rentals', rental) //* rentals (case-sensitive) is collection name in mongDB
       .update('movies', { _id: movie._id }, {
         $inc: {
@@ -54,11 +54,12 @@ router.post('/', async (req, res) => {
         }
       })
       .run();
-    res.send(result);
+    res.send(rental)
   } catch (err) {
     //* in case if anyone of operation fails
     res.status(500).send("Something went wrong with Intigrity...")
   }
+
 
 })
 
