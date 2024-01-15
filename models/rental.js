@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+
+//*NOTE: Creating schema with apparantly same properties and not reusing existing is because:
+//*What if we got lots of properties in our original movie and customer schema ? are we gonna use it all for jut renting it out? 
+//* No! real inefficient... so here we using separate schema for validation as per our specific need of information. 
+
+
 const customerSchema = new mongoose.Schema({
   name: {
     type: String,

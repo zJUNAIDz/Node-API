@@ -15,7 +15,7 @@ function validate(genre) {
 
   return schema.validate(genre);
 }
-
+module.exports.genreSchema = schema;
 module.exports.Genre = Genre;
 module.exports.validate = validate;
 // export default mongoose.model("Genre", schema);
